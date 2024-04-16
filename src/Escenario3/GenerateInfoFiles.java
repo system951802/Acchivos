@@ -8,25 +8,24 @@ public class GenerateInfoFiles {
 
     public static void main(String[] args) {
         GenerateInfoFiles generador = new GenerateInfoFiles();
-        if (generador.generarArchivosPrueba()) {
-            System.out.println("Archivos de prueba generados con éxito.");
-        } else {
-            System.err.println("Error al generar archivos de prueba.");
+        try {
+            if (generador.generarArchivosPrueba()) {
+                System.out.println("¡Archivos de prueba generados con éxito!");
+            } else {
+                System.err.println("Error al generar archivos de prueba.");
+            }
+        } catch (IOException e) {
+            System.err.println("Error al generar archivos de prueba: " + e.getMessage());
         }
     }
 
-    public boolean generarArchivosPrueba() {
-        try {
-            generarInfoVendedores(10); // Generar información de vendedores
-            generarInfoProductos(20); // Generar información de productos
-            for (int i = 0; i < 10; i++) {
-                generarVentasVendedor(5, "Vendedor" + i, i); // Generar ventas de prueba para cada vendedor
-            }
-            return true;
-        } catch (IOException e) {
-            System.err.println("Error al generar archivos de prueba: " + e.getMessage());
-            return false;
+    public boolean generarArchivosPrueba() throws IOException {
+        generarInfoVendedores(10); // Generar información de vendedores
+        generarInfoProductos(20); // Generar información de productos
+        for (int i = 0; i < 10; i++) {
+            generarVentasVendedor(5, "Vendedor" + i, i); // Generar ventas de prueba para cada vendedor
         }
+        return true;
     }
 
     private void generarVentasVendedor(int cantidadVentas, String nombre, long id) throws IOException {

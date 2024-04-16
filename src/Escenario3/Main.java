@@ -15,26 +15,27 @@ public class Main {
 
     public static void main(String[] args) {
         Main procesador = new Main();
-        if (procesador.generarReportes()) {
-            System.out.println("Archivos de reporte generados con éxito.");
-        } else {
-            System.err.println("Error al generar archivos de reporte.");
+        try {
+            if (procesador.generarReportes()) {
+                System.out.println("¡Archivos de reporte generados con éxito!");
+            } else {
+                System.err.println("Error al generar archivos de reporte.");
+            }
+        } catch (IOException e) {
+            System.err.println("Error: No se pudieron generar los archivos de reporte debido a un problema de entrada/salida.");
+        } catch (Exception e) {
+            System.err.println("Error inesperado: " + e.getMessage());
         }
     }
 
-    public boolean generarReportes() {
-        try {
-            Map<String, Integer> ventasPorVendedor = obtenerVentasPorVendedor();
-            crearReporteVentas(ventasPorVendedor);
+    public boolean generarReportes() throws IOException {
+        Map<String, Integer> ventasPorVendedor = obtenerVentasPorVendedor();
+        crearReporteVentas(ventasPorVendedor);
 
-            Map<String, Integer> ventasPorProducto = obtenerVentasPorProducto();
-            crearReporteVentasProducto(ventasPorProducto);
+        Map<String, Integer> ventasPorProducto = obtenerVentasPorProducto();
+        crearReporteVentasProducto(ventasPorProducto);
 
-            return true;
-        } catch (IOException e) {
-            System.err.println("Error al generar archivos de reporte: " + e.getMessage());
-            return false;
-        }
+        return true;
     }
 
     private Map<String, Integer> obtenerVentasPorVendedor() throws IOException {
@@ -69,7 +70,7 @@ public class Main {
                     try {
                         escritor.write(entry.getKey() + ";" + entry.getValue() + "\n");
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        System.err.println("Error al escribir en el archivo de reporte de ventas: " + e.getMessage());
                     }
                 });
         escritor.close();
@@ -105,7 +106,7 @@ public class Main {
                     try {
                         escritor.write(entry.getKey() + ";" + entry.getValue() + "\n");
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        System.err.println("Error al escribir en el archivo de reporte de ventas por producto: " + e.getMessage());
                     }
                 });
         escritor.close();

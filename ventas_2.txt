@@ -1,5 +1,5 @@
-IDProducto5;7
-IDProducto6;1
-IDProducto7;9
-IDProducto5;6
-IDProducto5;2
+IDProducto8;9
+IDProducto8;1
+IDProducto4;3
+IDProducto6;8
+IDProducto8;7
